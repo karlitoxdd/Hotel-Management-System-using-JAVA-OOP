@@ -1,0 +1,84 @@
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+public class MyTab extends JTabbedPane {
+	JPanel panelSecond, panelFirst, panelThird, panelFourth, panelFifth;
+	ImageIcon icon;
+	PanelTransaction t1 = new PanelTransaction();
+	TransactionButtons t2 = new TransactionButtons();
+	PanelTransactionTable t3 = new PanelTransactionTable();
+	PanelCustomer c1 = new PanelCustomer();
+	CustomerButton c2 = new CustomerButton();
+	PanelCustomerTable c3 = new PanelCustomerTable();
+	PanelEmployee e1 = new PanelEmployee();
+	EmployeeButtons e2 = new EmployeeButtons();
+	PanelEmployeeTable e3 = new PanelEmployeeTable();
+	PanelProduct p1 = new PanelProduct();
+	ProductButtons p2 = new ProductButtons();
+	PanelProductTable p3 = new PanelProductTable();
+	PanelSales s1 = new PanelSales();
+	SalesButtons s2 = new SalesButtons();
+	PanelSalesTable s3 = new PanelSalesTable();
+	public MyTab() {
+		
+		icon=new ImageIcon("IMAGES/3.jpg");
+		panelFirst = new JPanel(null);
+		t1.setBounds(5, 5, 300, 300);
+		panelFirst.add(t1);
+		t2.setBounds(5, 320, 350, 30);
+		panelFirst.add(t2);
+		t3.setBounds(370, 5, 850, 600);
+		panelFirst.add(t3);
+		add(new JLabel(icon));
+		add("Transactions",panelFirst);
+		
+				
+		icon=new ImageIcon("IMAGES/1.png");
+		setIconAt(0, icon);
+		panelSecond = new JPanel(null);
+		c1.setBounds(5, 5, 300, 250);
+		panelSecond.add(c1);
+		c2.setBounds(5, 270, 360, 30);
+		panelSecond.add(c2);
+		c3.setBounds(370, 5, 850, 600);
+		panelSecond.add(c3);
+		add("Customer",panelSecond);
+		
+		panelThird = new JPanel(null);
+		e1.setBounds(5, 5, 300, 250);
+		panelThird.add(e1);
+		e2.setBounds(5, 270, 360, 30);
+		panelThird.add(e2);
+		e3.setBounds(370, 5, 850, 600);
+		panelThird.add(e3);
+		add("Employee", panelThird); 
+		
+		panelFourth = new JPanel(null);
+		p1.setBounds(5, 5, 300, 175);
+		panelFourth.add(p1);
+		p2.setBounds(5, 200, 300, 30);
+		panelFourth.add(p2);
+		s3.setBounds(370, 5, 850, 600);
+		panelFourth.add(s3);
+		add("Product", panelFourth);
+		
+		panelFifth = new JPanel(null);
+		s1.setBounds(5, 5, 300, 175);
+		panelFifth.add(s1);
+		s2.setBounds(5, 200, 300, 30);
+		panelFifth.add(s2);
+		p3.setBounds(370, 5, 850, 600);
+		panelFourth.add(p3);
+		add("Sales", panelFifth);
+	}
+
+		
+	
+
+}

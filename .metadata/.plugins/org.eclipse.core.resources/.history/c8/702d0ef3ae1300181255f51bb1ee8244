@@ -1,0 +1,17 @@
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class TransactionButtonsPanel extends JPanel{
+	static JButton btnAddTrans, btnEditTrans, btnExitTrans;
+	
+	public TransactionButtonsPanel() {
+		btnAddTrans  = new JButton("Add Record");
+		btnEditTrans  = new JButton("Edit Record");
+		btnExitTrans  = new JButton("Exit");
+	
+		add(btnAddTrans); add(btnEditTrans); add(btnExitTrans);
+		
+	}
+}

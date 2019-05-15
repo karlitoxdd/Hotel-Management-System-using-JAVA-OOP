@@ -1,0 +1,65 @@
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Admin extends MyFrame{
+	private JTextField txtUser;
+	private JPasswordField pass;
+	public Admin() {
+		getContentPane().setBackground(Color.PINK);
+		getContentPane().setLayout(null);
+		
+		JLabel lblInputAdminLogin = new JLabel("Input Admin Login Details");
+		lblInputAdminLogin.setFont(new Font("Arial", Font.BOLD, 25));
+		lblInputAdminLogin.setBackground(Color.WHITE);
+		lblInputAdminLogin.setBounds(52, 11, 330, 43);
+		getContentPane().add(lblInputAdminLogin);
+		
+		JLabel lblUsername = new JLabel("Username:");
+		lblUsername.setBounds(52, 68, 63, 14);
+		getContentPane().add(lblUsername);
+		
+		txtUser = new JTextField();
+		txtUser.setBounds(128, 65, 226, 20);
+		getContentPane().add(txtUser);
+		txtUser.setColumns(10);
+		
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setBounds(52, 128, 63, 14);
+		getContentPane().add(lblPassword);
+		
+		pass = new JPasswordField();
+		pass.setBounds(128, 125, 226, 20);
+		getContentPane().add(pass);
+		
+		JButton btnEnter = new JButton("Enter");
+		btnEnter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(txtUser.equals("admin")&&pass.equals("owner")) {
+					JOptionPane.showMessageDialog(null, "Successful!");
+				}else {
+					SelectionFrame s = new SelectionFrame();
+					dispose();
+				}
+			}
+		});
+		btnEnter.setBounds(52, 189, 89, 23);
+		getContentPane().add(btnEnter);
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnCancel.setBounds(265, 189, 89, 23);
+		getContentPane().add(btnCancel);
+	}
+}

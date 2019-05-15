@@ -1,0 +1,6 @@
+CustomerID
+Name
+Gender
+Age
+Contact#
+Address

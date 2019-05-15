@@ -1,0 +1,38 @@
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+public class MyTab extends JTabbedPane {
+	JPanel panelAll, panelI, panelFirst;
+	ImageIcon icon;
+	public MyTab() {
+		icon=new ImageIcon("IMAGES/111.jpg");
+		panelFirst = new JPanel(new BorderLayout());
+		panelFirst.add(new TableRoom(), BorderLayout.CENTER);
+		panelFirst.add(new PanelBtnEdit(), BorderLayout.SOUTH);
+		add(new JLabel(icon));
+		add("Tab1",panelFirst);
+				
+		icon=new ImageIcon("IMAGES/1.png");
+		setIconAt(0, icon);
+		panelI = new JPanel(new BorderLayout());
+		panelI.add(new PanelInfo(),BorderLayout.WEST);
+		panelI.add(new PanelBirthdate(), BorderLayout.SOUTH);
+		panelAll=new JPanel(new BorderLayout());
+		panelAll.add(panelI,BorderLayout.WEST);
+		panelAll.add(new PanelButtons(),BorderLayout.SOUTH);
+		
+		panelAll.add(new PanelTable(),BorderLayout.CENTER);
+		add("Tab5",panelAll);
+		
+	}
+
+		
+	
+
+}

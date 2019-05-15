@@ -1,0 +1,8 @@
+TransactionCode
+Date
+RoomID
+CustomerID
+EmployeeID
+Duration
+Remarks
+Total

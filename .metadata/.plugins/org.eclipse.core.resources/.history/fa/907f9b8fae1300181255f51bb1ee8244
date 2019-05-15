@@ -1,0 +1,27 @@
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class EmployeePanel extends JPanel{
+	JLabel lblEmpID, lblEmpName, lblEmpAge, lblEmpGender, lblEmpContact, lblEmpAddress;
+	static JTextField txtEmpID, txtEmpName, txtEmpAge, txtEmpContact, txtEmpAddress;
+	static JComboBox cboEmpGender;
+	
+	public EmployeePanel() {
+		lblEmpID = new JLabel("Employee ID: ");
+		lblEmpName = new JLabel("Employee Name: ");
+		lblEmpAge = new JLabel("Employee Age: ");
+		lblEmpGender = new JLabel("Employee Gender: ");
+		lblEmpContact = new JLabel("Employee Contact: ");
+		lblEmpAddress = new JLabel("Employee Address: ");
+		
+		txtEmpID = new JTextField(20);
+		txtEmpName = new JTextField(20);
+		txtEmpAge = new JTextField(20);
+		txtEmpContact = new JTextField(20);
+		txtEmpAddress = new JTextField(20);
+		
+	}
+
+}

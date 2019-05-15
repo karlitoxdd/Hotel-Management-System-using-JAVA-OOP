@@ -1,0 +1,52 @@
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class EmployeePanel extends JPanel{
+	JLabel lblEmpID, lblEmpName, lblEmpAge, lblEmpGender, lblEmpContact, lblEmpAddress;
+	static JTextField txtEmpID, txtEmpName, txtEmpAge, txtEmpContact, txtEmpAddress;
+	static JComboBox cboEmpGender;
+	Font f = new Font("Arial", Font.BOLD, 16);
+	
+	public EmployeePanel() {
+		lblEmpID = new JLabel("Employee ID: ");
+		lblEmpName = new JLabel("Employee Name: ");
+		lblEmpAge = new JLabel("Employee Age: ");
+		lblEmpGender = new JLabel("Employee Gender: ");
+		lblEmpContact = new JLabel("Employee Contact: ");
+		lblEmpAddress = new JLabel("Employee Address: ");
+		
+		txtEmpID = new JTextField(20);
+		txtEmpName = new JTextField(20);
+		txtEmpAge = new JTextField(20);
+		txtEmpContact = new JTextField(20);
+		txtEmpAddress = new JTextField(20);
+		
+		cboEmpGender = new JComboBox();
+		cboEmpGender.addItem("Male");
+		cboEmpGender.addItem("Female");
+		
+		setBorder(BorderFactory.createTitledBorder(null,"Transactions",0,0,f));
+		setLayout(new GridLayout(6, 2));
+		setFont(f);
+		
+		add(lblEmpID); add(txtEmpID);
+		add(lblEmpName); add(txtEmpName);
+		add(lblEmpAge); add(txtEmpAge);
+		add(lblEmpGender); add(cboEmpGender);
+		add(lblEmpContact); add(txtEmpContact);
+		add(lblEmpAddress); add(txtEmpAddress);
+		
+	}
+	private void Main() {
+		// TODO Auto-generated method stub
+		EmployeePanel p = new EmployeePanel();
+	}
+	
+
+}

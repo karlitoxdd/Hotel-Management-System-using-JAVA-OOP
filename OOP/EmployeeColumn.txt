@@ -1,0 +1,6 @@
+EmployeeID
+Name
+Age
+Gender
+Contact
+Address

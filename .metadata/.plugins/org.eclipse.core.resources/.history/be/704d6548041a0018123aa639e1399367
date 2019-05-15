@@ -1,0 +1,36 @@
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
+public class PanelSalesTable extends JPanel{
+	static JTable tblProd;
+	static DefaultTableModel model_Prod = new DefaultTableModel();
+	static TableRowSorter tbl_prodSort = new TableRowSorter();
+	DataBase data;
+	
+	public PanelSalesTable() {
+		data = new DataBase("TransactionColumn.txt");
+		model_Prod = new DefaultTableModel();
+		data.setEmpColumn(model_Prod);
+		
+		
+		data = new DataBase("Transaction.txt");
+		data.setEmpRow(model_Prod);
+		tblProd = new JTable(model_Prod);
+		
+	
+		PanelProduct.txtProdId.setText(getRowCount()+"");
+		setLayout(new BorderLayout());
+		add(new JScrollPane(tblProd), BorderLayout.CENTER);
+	}
+
+
+	public static int getRowCount() {
+		return model_Prod.getRowCount()+201;
+	
+	}
+}

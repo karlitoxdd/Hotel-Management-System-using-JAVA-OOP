@@ -1,0 +1,58 @@
+import java.awt.Color;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Admin extends MyFrame{
+	private JTextField textField;
+	private JPasswordField passwordField;
+	public Admin() {
+		getContentPane().setBackground(Color.PINK);
+		getContentPane().setLayout(null);
+		
+		JLabel lblInputAdminLogin = new JLabel("Input Admin Login Details");
+		lblInputAdminLogin.setFont(new Font("Arial", Font.BOLD, 25));
+		lblInputAdminLogin.setBackground(Color.WHITE);
+		lblInputAdminLogin.setBounds(52, 11, 330, 43);
+		getContentPane().add(lblInputAdminLogin);
+		
+		JLabel lblUsername = new JLabel("Username:");
+		lblUsername.setBounds(52, 68, 63, 14);
+		getContentPane().add(lblUsername);
+		
+		textField = new JTextField();
+		textField.setBounds(128, 65, 226, 20);
+		getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setBounds(52, 128, 63, 14);
+		getContentPane().add(lblPassword);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(128, 125, 226, 20);
+		getContentPane().add(passwordField);
+		
+		JButton btnEnter = new JButton("Enter");
+		btnEnter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnEnter.setBounds(52, 189, 89, 23);
+		getContentPane().add(btnEnter);
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnCancel.setBounds(265, 189, 89, 23);
+		getContentPane().add(btnCancel);
+	}
+}

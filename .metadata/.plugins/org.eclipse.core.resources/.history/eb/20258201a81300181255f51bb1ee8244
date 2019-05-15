@@ -1,0 +1,27 @@
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+public class MyTab extends JTabbedPane {
+	JPanel panelAll, panelI, panelFirst;
+	ImageIcon icon;
+	public MyTab() {
+		icon=new ImageIcon("IMAGES/111.jpg");
+		panelFirst = new JPanel(new BorderLayout());
+		panelFirst.add(new TransactionPanel(), BorderLayout.EAST);
+		add(new JLabel(icon));
+		add("Tab1",panelFirst);
+				
+	
+		
+	}
+
+		
+	
+
+}

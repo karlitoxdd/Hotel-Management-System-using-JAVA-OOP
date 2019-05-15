@@ -1,0 +1,13 @@
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class EmployeeButtonsPanel extends JPanel{
+
+	static JButton btnAddEmp, btnEditEmp, btnExitEmp;
+	
+	public EmployeeButtonsPanel() {
+		btnAddEmp = new JButton("Add Employee");
+		btnEditEmp = new JButton("Edit Employee");
+		btnExitEmp = new JButton("Exit");
+	}
+}

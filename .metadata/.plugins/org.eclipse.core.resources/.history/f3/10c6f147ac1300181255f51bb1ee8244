@@ -1,0 +1,40 @@
+import java.awt.Font;
+
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class CustomerPanel extends JPanel{
+	JLabel lblCustomerID, lblCustName, lblCustGender, lblCustAge, lblCustContact, lblCustAddress;
+	static JTextField txtCustName, txtCustAge, txtCustContact, txtCustAddress, txtCustomerID;
+	static JComboBox cboCustGender;
+	Font f = new Font("Arial", Font.BOLD, 16);
+	
+	public CustomerPanel() {
+		lblCustomerID = new JLabel("Customer ID: ");
+		lblCustName = new JLabel("Customer Name: ");
+		lblCustGender = new JLabel("Customer Gender: ");
+		lblCustAge = new JLabel("Customer Age: ");
+		lblCustContact = new JLabel("Customer Contact: ");
+		lblCustAddress = new JLabel("Customer Location: ");
+		
+		txtCustomerID = new JTextField(20);
+		txtCustName = new JTextField(20);
+		txtCustAge = new JTextField(20);
+		txtCustContact = new JTextField(20);
+		txtCustAddress = new JTextField(20);
+		
+		cboCustGender = new JComboBox();
+		cboCustGender.addItem("Male");
+		cboCustGender.addItem("Female");
+		
+		add(lblCustomerID); add(txtCustomerID);
+		add(lblCustName); add(txtCustName);
+		add(lblCustGender); add(cboCustGender);
+		add(lblCustAge); add(txtCustAge);
+		add(lblCustContact); add(txtCustContact);
+		add(lblCustAddress); add(txtCustAddress);
+		
+	}
+}

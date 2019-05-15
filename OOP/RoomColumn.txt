@@ -1,0 +1,4 @@
+RoomID
+Description
+Status
+Max Persons

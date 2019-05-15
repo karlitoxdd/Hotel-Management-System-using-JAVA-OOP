@@ -1,0 +1,14 @@
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class CustomerButtonsPanel extends JPanel{
+	static JButton btnAddCust, btnEditCust, btnExitCust;
+	
+	public CustomerButtonsPanel() {
+		btnAddCust = new JButton("Add Customer");
+		btnEditCust = new JButton("Edit Customer");
+		btnExitCust = new JButton("Exit");
+		
+	}
+
+}

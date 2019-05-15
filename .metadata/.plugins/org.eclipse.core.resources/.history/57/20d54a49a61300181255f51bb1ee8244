@@ -1,0 +1,44 @@
+import java.awt.Font;
+
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class TransactionPanel extends JPanel{
+	JLabel lblTransactionCode, lblTransactionDate, lblTransactionRoomID, lblTransactionCustID, lblTransactionEmpID, lblTransactionDuration, lblTransactionTotal, lblTransactionRemarks;
+	static JTextField txtTransactionCode, txtTransactionDate, txtTransactionTotal, txtTransactionRemarks;
+	static JComboBox cboTransRoomID, cboTransCustID, cboTransEmpID, cboTransDuration;
+	Font f = new Font("Arial", Font.BOLD, 16);
+	
+	public TransactionPanel() {
+		lblTransactionCode = new JLabel("Transaction Code: ");
+		lblTransactionDate = new JLabel("Transaction Date: ");
+		lblTransactionRoomID = new JLabel("Room ID: ");
+		lblTransactionCustID = new JLabel("Customer ID: ");
+		lblTransactionEmpID = new JLabel("Employee ID: ");
+		lblTransactionDuration = new JLabel("Duration: ");
+		lblTransactionTotal = new JLabel("Total: ");
+		lblTransactionRemarks = new JLabel("Remarks: ");
+		
+		txtTransactionCode = new JTextField(20);
+		txtTransactionDate = new JTextField(20);
+		txtTransactionTotal = new JTextField(20);
+		txtTransactionRemarks = new JTextField(20);
+		
+		cboTransRoomID = new JComboBox();
+		cboTransRoomID.addItem("101");
+		cboTransRoomID.addItem("102");
+		cboTransRoomID.addItem("103");
+		cboTransRoomID.addItem("104");
+		cboTransRoomID.addItem("105");
+		
+		cboTransCustID = new JComboBox();
+		cboTransCustID.addItem("001");
+		cboTransCustID.addItem("002");
+		cboTransCustID.addItem("003");
+		cboTransCustID.addItem("004");
+		cboTransCustID.addItem("005");
+	}
+	
+}

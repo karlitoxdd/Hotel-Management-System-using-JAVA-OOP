@@ -1,0 +1,537 @@
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.SimpleDateFormat;
+import java.util.StringTokenizer;
+import java.util.Vector;
+
+import javax.swing.JColorChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
+public class Listener implements ActionListener, MouseListener{
+	Vector values1,values2,values3,values4,values5;
+	String TransactionCode, TransactionDate, TransactionRoomID, TransactionCustID, TransactionEmpID, TransactionDuration, TransactionTotal, TransactionRemarks,
+	CustomerID, CustomerName, CustomerGender, CustomerAge, CustomerContact, CustomerAddress, 
+	EmployeeID, EmployeeName, EmployeeAge, EmployeeGender, EmployeeContact, EmployeeAddress,
+	SalesID, SalesDate, SalesTotal;
+	ProjDatabase data;
+	MainProgram mp = new MainProgram();
+	String pay ="";
+	int amount =0;
+	SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+	public Listener() {
+		values1=new Vector();
+		values2=new Vector();
+		values3=new Vector();
+		values4=new Vector();
+		values5=new Vector();
+	}
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource().equals(TransactionButtonsPanel.btnAddTrans)){	
+			
+			for(int i = 0 ; i< RoomsTablePanel.model_room.getRowCount();i++) {
+				if(TransactionPanel.cboTransRoomID.getSelectedItem().equals(RoomsTablePanel.model_room.getValueAt(i, 0))&&TransactionPanel.cboTransDuration.getSelectedItem().equals("12Hours")) {
+					
+					if(RoomsTablePanel.model_room.getValueAt(i, 1).equals("Standard")) {
+						TransactionPanel.txtPrice.setText("250");
+					}if(RoomsTablePanel.model_room.getValueAt(i, 1).equals("Deluxe")) {
+						TransactionPanel.txtPrice.setText("300");
+					}if(RoomsTablePanel.model_room.getValueAt(i, 1).equals("Aircon")) {
+						TransactionPanel.txtPrice.setText("650");
+					}if(RoomsTablePanel.model_room.getValueAt(i, 1).equals("Family")) {
+						TransactionPanel.txtPrice.setText("900");
+					}
+				}else if(TransactionPanel.cboTransRoomID.getSelectedItem().equals(RoomsTablePanel.model_room.getValueAt(i, 0))&&TransactionPanel.cboTransDuration.getSelectedItem().equals("24Hours")) {
+					if(RoomsTablePanel.model_room.getValueAt(i, 1).equals("Standard")) {
+						TransactionPanel.txtPrice.setText("400");
+					}if(RoomsTablePanel.model_room.getValueAt(i, 1).equals("Deluxe")) {
+						TransactionPanel.txtPrice.setText("500");
+					}if(RoomsTablePanel.model_room.getValueAt(i, 1).equals("Aircon")) {
+						TransactionPanel.txtPrice.setText("1200");
+					}if(RoomsTablePanel.model_room.getValueAt(i, 1).equals("Family")) {
+						TransactionPanel.txtPrice.setText("2000");
+					}
+				}
+			}
+			
+			TransactionTablePanel.model_trans.addRow(addNewRecordTrans());
+			TransactionPanel.txtTransactionCode.setText(TransactionTablePanel.getRowCount()+"");
+			JOptionPane.showMessageDialog(null, "Transaction Records are successfully updated!");
+			for(int i = 0 ; i < RoomsTablePanel.model_room.getRowCount(); i++) {
+			if(TransactionPanel.cboTransRoomID.getSelectedItem().equals(RoomsTablePanel.model_room.getValueAt(i, 0))){
+				RoomsTablePanel.model_room.setValueAt("Occupied", i, 2);
+			}}
+			
+			data=new ProjDatabase("Transaction.txt");
+			String records="";
+			for (int r = 0; r < TransactionTablePanel.model_trans.getRowCount(); r++) {
+				for (int c = 0; c < TransactionTablePanel.model_trans.getColumnCount(); c++) {  
+					records+=TransactionTablePanel.model_trans.getValueAt(r, c)+"#";
+				}
+				records+="";
+			}
+			data.storeToFile(records);
+			
+			data=new ProjDatabase("Room.txt");
+			String recordsRoom="";
+			for (int r = 0; r < RoomsTablePanel.model_room.getRowCount(); r++) {
+				for (int c = 0; c < RoomsTablePanel.model_room.getColumnCount(); c++) {
+					recordsRoom+=RoomsTablePanel.model_room.getValueAt(r, c)+"#";
+				}
+				recordsRoom+="";
+			}
+			data.storeToFile(recordsRoom);
+			for(int i =0; i<TransactionTablePanel.model_trans.getRowCount();i++) {
+				pay = TransactionTablePanel.model_trans.getValueAt(i, 7).toString();
+				amount = Integer.parseInt(pay);
+			}
+			data=new ProjDatabase("Sales.txt");
+			String recordsSales="";
+			for (int r = 0; r < SalesTablePanel.model_Sales.getRowCount(); r++) {
+				for (int c = 0; c < SalesTablePanel.model_Sales.getColumnCount(); c++) {
+					recordsSales+=SalesTablePanel.model_Sales.getValueAt(r, c)+"#";
+				}
+				recordsSales+="";
+			}
+			data.storeToFile(recordsSales);
+		
+		
+		}else if(e.getSource().equals(TransactionButtonsPanel.btnEditTrans)){	
+			int row=TransactionTablePanel.tblTrans.getSelectedRow();
+			addNewRecordTrans();
+				for (int j = 1; j < TransactionTablePanel.model_trans.getColumnCount(); j++) { //column
+					TransactionTablePanel.model_trans.setValueAt(values1.get(j), row, j);
+				}
+				
+				
+					
+					for(int i = 0; i<TransactionTablePanel.model_trans.getRowCount(); i++) {
+						for(int j = 0; j<RoomsTablePanel.model_room.getRowCount(); j++)
+					
+				if(TransactionPanel.cboTransRoomID.getSelectedItem().equals(RoomsTablePanel.model_room.getValueAt(j, 0))){
+					if(TransactionTablePanel.model_trans.getValueAt(i, 6).toString().equals("Checked Out")){
+					RoomsTablePanel.model_room.setValueAt("Vacant", j, 2);
+					}}}
+				
+				data=new ProjDatabase("Transaction.txt");
+				String records="";
+				for (int r = 0; r < TransactionTablePanel.model_trans.getRowCount(); r++) {
+					for (int c = 0; c < TransactionTablePanel.model_trans.getColumnCount(); c++) {
+						records+=TransactionTablePanel.model_trans.getValueAt(r, c)+"#";
+					}
+					records+="";
+				}
+				data.storeToFile(records);
+				
+				data=new ProjDatabase("Room.txt");
+				String recordsRoom="";
+				for (int r = 0; r < RoomsTablePanel.model_room.getRowCount(); r++) {
+					for (int c = 0; c < RoomsTablePanel.model_room.getColumnCount(); c++) {
+						recordsRoom+=RoomsTablePanel.model_room.getValueAt(r, c)+"#";
+					}
+					recordsRoom+="";
+				}
+				data.storeToFile(recordsRoom);
+		}else if(e.getSource().equals(TransactionButtonsPanel.btnExitTrans)){	
+			data=new ProjDatabase("Room.txt");
+			String recordsRoom="";
+			for (int r = 0; r < RoomsTablePanel.model_room.getRowCount(); r++) {
+				for (int c = 0; c < RoomsTablePanel.model_room.getColumnCount(); c++) {
+					recordsRoom+=RoomsTablePanel.model_room.getValueAt(r, c)+"#";
+				}
+				recordsRoom+="";
+			}
+			data.storeToFile(recordsRoom);
+			
+		}
+			if(e.getSource().equals(CheckoutButton.btnCheckOut)){
+				int row=TransactionTablePanel.tblTrans.getSelectedRow();
+				addNewRecordTrans();
+					for (int j = 1; j < TransactionTablePanel.model_trans.getColumnCount(); j++) { //column
+						TransactionTablePanel.model_trans.setValueAt(values1.get(j), row, j);
+					}
+					
+					
+						
+						for(int i = 0; i<TransactionTablePanel.model_trans.getRowCount(); i++) {
+							for(int j = 0; j<RoomsTablePanel.model_room.getRowCount(); j++)
+						
+					if(TransactionPanel.cboTransRoomID.getSelectedItem().equals(RoomsTablePanel.model_room.getValueAt(j, 0))){
+						if(TransactionTablePanel.model_trans.getValueAt(i, 6).toString().equals("Checked Out")){
+						RoomsTablePanel.model_room.setValueAt("Vacant", j, 2);
+						}}}
+					
+					data=new ProjDatabase("Transaction.txt");
+					String records="";
+					for (int r = 0; r < TransactionTablePanel.model_trans.getRowCount(); r++) {
+						for (int c = 0; c < TransactionTablePanel.model_trans.getColumnCount(); c++) {
+							records+=TransactionTablePanel.model_trans.getValueAt(r, c)+"#";
+						}
+						records+="";
+					}
+					data.storeToFile(records);
+					
+					data=new ProjDatabase("Room.txt");
+					String recordsRoom="";
+					for (int r = 0; r < RoomsTablePanel.model_room.getRowCount(); r++) {
+						for (int c = 0; c < RoomsTablePanel.model_room.getColumnCount(); c++) {
+							recordsRoom+=RoomsTablePanel.model_room.getValueAt(r, c)+"#";
+						}
+						recordsRoom+="";
+					}
+					data.storeToFile(recordsRoom);
+			}
+			
+		
+		
+		if(e.getSource().equals(CustomerButtonsPanel.btnAddCust)){	
+			CustomerTablePanel.model_cust.addRow(addNewRecordCust());
+			CustomerPanel.txtCustomerID.setText(CustomerTablePanel.getRowCount()+"");
+			JOptionPane.showMessageDialog(null, "Customer Records are successfully updated!");
+			data=new ProjDatabase("Customer.txt");
+			String records="";
+			for (int r = 0; r < CustomerTablePanel.model_cust.getRowCount(); r++) {
+				for (int c = 0; c < CustomerTablePanel.model_cust.getColumnCount(); c++) {
+					records+=CustomerTablePanel.model_cust.getValueAt(r, c)+"#";
+				}
+				records+="";
+			}
+			data.storeToFile(records);
+		}else if(e.getSource().equals(CustomerButtonsPanel.btnEditCust)){	
+			int row=CustomerTablePanel.tblCust.getSelectedRow();
+			addNewRecordCust();
+				for (int j = 1; j < CustomerTablePanel.model_cust.getColumnCount(); j++) { //column
+					CustomerTablePanel.model_cust.setValueAt(values2.get(j), row, j);
+				}
+				data=new ProjDatabase("Customer.txt");
+				String records="";
+				for (int r = 0; r < CustomerTablePanel.model_cust.getRowCount(); r++) {
+					for (int c = 0; c < CustomerTablePanel.model_cust.getColumnCount(); c++) {
+						records+=CustomerTablePanel.model_cust.getValueAt(r, c)+"#";
+					}
+					records+="";
+				}
+				data.storeToFile(records);
+		}else if(e.getSource().equals(CustomerButtonsPanel.btnExitCust)){	
+			data=new ProjDatabase("Customer.txt");
+			String records="";
+			for (int r = 0; r < CustomerTablePanel.model_cust.getRowCount(); r++) {
+				for (int c = 0; c < CustomerTablePanel.model_cust.getColumnCount(); c++) {
+					records+=CustomerTablePanel.model_cust.getValueAt(r, c)+"#";
+				}
+				records+="";
+			}
+			data.storeToFile(records);
+	
+		
+		}
+		if(e.getSource().equals(EmployeeButtonsPanel.btnAddEmp)){	
+			EmployeeTablePanel.model_emp.addRow(addNewRecordEmp());
+			EmployeePanel.txtEmpID.setText(EmployeeTablePanel.getRowCount()+"");
+			JOptionPane.showMessageDialog(null, "Transaction Records are successfully updated!");
+			data=new ProjDatabase("Employee.txt");
+			String records="";
+			for (int r = 0; r < EmployeeTablePanel.model_emp.getRowCount(); r++) {
+				for (int c = 0; c < EmployeeTablePanel.model_emp.getColumnCount(); c++) {
+					records+=EmployeeTablePanel.model_emp.getValueAt(r, c)+"#";
+				}
+				records+="";
+			}
+			data.storeToFile(records);
+		
+		}else if(e.getSource().equals(EmployeeButtonsPanel.btnEditEmp)){	
+			int row=EmployeeTablePanel.tblEmp.getSelectedRow();
+			addNewRecordEmp();
+				for (int j = 1; j < EmployeeTablePanel.model_emp.getColumnCount(); j++) { //column
+					EmployeeTablePanel.model_emp.setValueAt(values3.get(j), row, j);
+				}
+				data=new ProjDatabase("Employee.txt");
+				String records="";
+				for (int r = 0; r < EmployeeTablePanel.model_emp.getRowCount(); r++) {
+					for (int c = 0; c < EmployeeTablePanel.model_emp.getColumnCount(); c++) {
+						records+=EmployeeTablePanel.model_emp.getValueAt(r, c)+"#";
+					}
+					records+="";
+				}
+				data.storeToFile(records);
+			
+		}else if(e.getSource().equals(EmployeeButtonsPanel.btnExitEmp)){	
+			data=new ProjDatabase("Employee.txt");
+			String records="";
+			for (int r = 0; r < EmployeeTablePanel.model_emp.getRowCount(); r++) {
+				for (int c = 0; c < EmployeeTablePanel.model_emp.getColumnCount(); c++) {
+					records+=EmployeeTablePanel.model_emp.getValueAt(r, c)+"#";
+				}
+				records+="";
+			}
+			data.storeToFile(records);
+		
+		
+		}
+		if(e.getSource().equals(SalesButtonsPanel.btnAddSales)){	
+			
+				SalesTablePanel.model_Sales.addRow(addNewRecordSales());
+				for(int i=0;i<TransactionTablePanel.model_trans.getRowCount();i++) {
+				if(!SalesPanel.txtSalesDate.getText().equals(TransactionTablePanel.model_trans.getValueAt(i, 1))) {
+				SalesPanel.txtSalesID.setText(SalesTablePanel.getRowCount()+"");
+				}
+				}
+				
+			JOptionPane.showMessageDialog(null, "Sales Records are successfully updated!");
+			data=new ProjDatabase("Sales.txt");
+			String records="";
+			for (int r = 0; r < SalesTablePanel.model_Sales.getRowCount(); r++) {
+				for (int c = 0; c < SalesTablePanel.model_Sales.getColumnCount(); c++) {
+					records+=SalesTablePanel.model_Sales.getValueAt(r, c)+"#";
+				}
+				records+="";
+			}
+			data.storeToFile(records);
+		}else if(e.getSource().equals(SalesButtonsPanel.btnEditSales)){	
+			int row=SalesTablePanel.tblSales.getSelectedRow();
+			addNewRecordSales();
+				for (int j = 1; j < SalesTablePanel.model_Sales.getColumnCount(); j++) { //column
+					SalesTablePanel.model_Sales.setValueAt(values5.get(j), row, j);
+				}
+				
+				data=new ProjDatabase("Sales.txt");
+				String records="";
+				for (int r = 0; r < SalesTablePanel.model_Sales.getRowCount(); r++) {
+					for (int c = 0; c < SalesTablePanel.model_Sales.getColumnCount(); c++) {
+						records+=SalesTablePanel.model_Sales.getValueAt(r, c)+"#";
+					}
+					records+="";
+				}
+				data.storeToFile(records);
+		}else if(e.getSource().equals(SalesButtonsPanel.btnExitSales)){	
+			data=new ProjDatabase("Sales.txt");
+			String records="";
+			for (int r = 0; r < SalesTablePanel.model_Sales.getRowCount(); r++) {
+				for (int c = 0; c < SalesTablePanel.model_Sales.getColumnCount(); c++) {
+					records+=SalesTablePanel.model_Sales.getValueAt(r, c)+"#";
+				}
+				records+="";
+			}
+			data.storeToFile(records);
+			
+		
+		}
+		
+		if(e.getSource().equals(RoomButtonsPanel.btnAddRoom)) {
+			RoomsTablePanel.model_room.addRow(addNewRecordRoom());
+			RoomsPanel.txtID.setText(RoomsTablePanel.getRowCount()+"");
+			JOptionPane.showMessageDialog(null, "Room Records are successfully updated!");
+			data=new ProjDatabase("Room.txt");
+			String records="";
+			for (int r = 0; r < RoomsTablePanel.model_room.getRowCount(); r++) {
+				for (int c = 0; c < RoomsTablePanel.model_room.getColumnCount(); c++) {
+					records+=RoomsTablePanel.model_room.getValueAt(r, c)+"#";
+				}
+				records+="\n";
+			}
+			data.storeToFile(records);
+		}
+		if(e.getSource().equals(RoomButtonsPanel.btnEditRoom)) {
+			int row=RoomsTablePanel.tbl_room.getSelectedRow();
+			addNewRecordRoom();
+				for (int j = 1; j < RoomsTablePanel.model_room.getColumnCount(); j++) { //column
+					RoomsTablePanel.model_room.setValueAt(values4.get(j), row, j);
+				}
+				
+				data=new ProjDatabase("Room.txt");
+				String records="";
+				for (int r = 0; r < SalesTablePanel.model_Sales.getRowCount(); r++) {
+					for (int c = 0; c < SalesTablePanel.model_Sales.getColumnCount(); c++) {
+						records+=SalesTablePanel.model_Sales.getValueAt(r, c)+"#";
+					}
+					records+="";
+				}
+				data.storeToFile(records);
+		}
+		if(e.getSource().equals(RoomButtonsPanel.btnExitRoom)) {
+			data=new ProjDatabase("Room.txt");
+			String records="";
+			for (int r = 0; r < RoomsTablePanel.model_room.getRowCount(); r++) {
+				for (int c = 0; c < RoomsTablePanel.model_room.getColumnCount(); c++) {
+					records+=RoomsTablePanel.model_room.getValueAt(r, c)+"#";
+				}
+				records+="";
+			}
+			data.storeToFile(records);
+			
+		
+		
+		}
+		
+		if(e.getSource().equals(RoomButtonsPanelUser.btnExitRoom)) {
+			data=new ProjDatabase("Room.txt");
+			String records="";
+			for (int r = 0; r < RoomsTablePanel.model_room.getRowCount(); r++) {
+				for (int c = 0; c < RoomsTablePanel.model_room.getColumnCount(); c++) {
+					records+=RoomsTablePanel.model_room.getValueAt(r, c)+"#";
+				}
+				records+="";
+			}
+			data.storeToFile(records);
+		}
+		
+	}
+	public Vector addNewRecordTrans(){
+		values1=new Vector();
+		values1.add(TransactionPanel.txtTransactionCode.getText());
+		values1.add(TransactionPanel.txtTransactionDate.getText());
+		values1.add(TransactionPanel.cboTransRoomID.getSelectedItem());
+		values1.add(TransactionPanel.cboTransCustID.getSelectedItem());
+		values1.add(TransactionPanel.cboTransEmpID.getSelectedItem());
+		values1.add(TransactionPanel.cboTransDuration.getSelectedItem());
+		values1.add(TransactionPanel.txtRemarks.getText());
+		values1.add(TransactionPanel.txtPrice.getText());
+		
+		return values1; 
+	}
+	public Vector addNewRecordCust(){
+		values2=new Vector();
+		values2.add(CustomerPanel.txtCustomerID.getText());
+		values2.add(CustomerPanel.txtCustName.getText());
+		values2.add(CustomerPanel.cboCustGender.getSelectedItem());
+		values2.add(CustomerPanel.txtCustAge.getText());
+		values2.add(CustomerPanel.txtCustContact.getText());
+		values2.add(CustomerPanel.txtCustAddress.getText());
+		return values2; 
+	}
+	public Vector addNewRecordEmp(){
+		values3=new Vector();
+		values3.add(EmployeePanel.txtEmpID.getText());
+		values3.add(EmployeePanel.txtEmpName.getText());
+		values3.add(EmployeePanel.txtEmpAge.getText());
+		values3.add(EmployeePanel.cboEmpGender.getSelectedItem());
+		values3.add(EmployeePanel.txtEmpContact.getText());
+		values3.add(EmployeePanel.txtEmpAddress.getText());
+		return values3; 
+	}
+	public Vector addNewRecordRoom(){
+		values4=new Vector();
+		values4.add(RoomsPanel.txtID.getText());
+		values4.add(RoomsPanel.cboDescription.getSelectedItem());
+		values4.add(RoomsPanel.cboStatus.getSelectedItem());
+		values4.add(RoomsPanel.cboPersons.getSelectedItem());
+		return values4; 
+	}
+	public Vector addNewRecordSales(){
+		values5=new Vector();
+		values5.add(SalesPanel.txtSalesID.getText());
+		values5.add(SalesPanel.txtSalesDate.getText());
+		values5.add(SalesPanel.txtSalesTotal.getText());
+		return values5; 
+	}
+
+	public void mouseClicked(MouseEvent e) {
+		if(e.getSource().equals(TransactionTablePanel.tblTrans)){
+	
+			TransactionPanel.cboTransDuration.setEnabled(false);
+			int row=TransactionTablePanel.tblTrans.getSelectedRow();	
+			
+				if(TransactionTablePanel.model_trans.getValueAt(row, 6).equals("Checked Out")){
+					CheckoutButton.btnCheckOut.setEnabled(false);
+				}else {
+					CheckoutButton.btnCheckOut.setEnabled(true);
+				}
+			//TransactionPanel.txtTransactionCode.setText(TransactionTablePanel.model_trans.getValueAt(row,0)+"");
+			TransactionPanel.txtTransactionDate.setText(TransactionTablePanel.model_trans.getValueAt(row,1)+"");
+			TransactionPanel.cboTransRoomID.setSelectedItem(TransactionTablePanel.model_trans.getValueAt(row,2));
+			TransactionPanel.cboTransCustID.setSelectedItem(TransactionTablePanel.model_trans.getValueAt(row,3)+"");
+			TransactionPanel.cboTransEmpID.setSelectedItem(TransactionTablePanel.model_trans.getValueAt(row,4));
+			TransactionPanel.cboTransDuration.setSelectedItem(TransactionTablePanel.model_trans.getValueAt(row,5));
+			TransactionPanel.txtPrice.setText(TransactionTablePanel.model_trans.getValueAt(row, 7)+"");
+			TransactionPanel.txtRemarks.setText(TransactionTablePanel.model_trans.getValueAt(row,6)+"");
+			TransactionReceiptPanel.txtTransID.setText(TransactionTablePanel.model_trans.getValueAt(row,0)+"");
+			TransactionReceiptPanel.txtCustID.setText(TransactionTablePanel.model_trans.getValueAt(row,3)+"");
+			TransactionReceiptPanel.txtTotal.setText(TransactionPanel.txtPrice.getText()+"");
+			if(TransactionTablePanel.model_trans.getValueAt(row, 6).equals("Checked In")) {
+				TransactionPanel.txtRemarks.setText("Checked Out");
+			}else {
+				TransactionPanel.txtRemarks.setText("Checked In");
+			}
+		}
+		if(e.getSource().equals(CustomerTablePanel.tblCust)){
+			int row=CustomerTablePanel.tblCust.getSelectedRow();	
+			//CustomerPanel.txtCustomerID.setText(CustomerTablePanel.model_cust.getValueAt(row,0)+"");
+			CustomerPanel.txtCustName.setText(CustomerTablePanel.model_cust.getValueAt(row,1)+"");
+			CustomerPanel.cboCustGender.setSelectedItem(CustomerTablePanel.model_cust.getValueAt(row,2));
+			CustomerPanel.txtCustAge.setText(CustomerTablePanel.model_cust.getValueAt(row,3)+"");
+			CustomerPanel.txtCustContact.setText(CustomerTablePanel.model_cust.getValueAt(row,4)+"");
+			CustomerPanel.txtCustAddress.setText(CustomerTablePanel.model_cust.getValueAt(row,5)+"");
+			
+		
+		}
+		if(e.getSource().equals(EmployeeTablePanel.tblEmp)){
+			int row=EmployeeTablePanel.tblEmp.getSelectedRow();	
+			//EmployeePanel.txtEmpID.setText(EmployeeTablePanel.model_emp.getValueAt(row,0)+"");
+			EmployeePanel.txtEmpName.setText(EmployeeTablePanel.model_emp.getValueAt(row,1)+"");
+			EmployeePanel.txtEmpAge.setText(EmployeeTablePanel.model_emp.getValueAt(row,2)+"");
+			EmployeePanel.cboEmpGender.setSelectedItem(EmployeeTablePanel.model_emp.getValueAt(row,3));
+			EmployeePanel.txtEmpContact.setText(EmployeeTablePanel.model_emp.getValueAt(row,4)+"");
+			EmployeePanel.txtEmpAddress.setText(EmployeeTablePanel.model_emp.getValueAt(row,5)+"");
+		
+		}
+		if(e.getSource().equals(RoomsTablePanel.tbl_room)) {
+			
+			int row = RoomsTablePanel.tbl_room.getSelectedRow();
+			//RoomsPanel.txtID.setText(RoomsTablePanel.model_room.getValueAt(row, 0)+"");
+			RoomsPanel.cboDescription.setSelectedItem(RoomsTablePanel.model_room.getValueAt(row, 1)+"");
+			RoomsPanel.cboStatus.setSelectedItem(RoomsTablePanel.model_room.getValueAt(row, 2)+"");
+			RoomsPanel.cboPersons.setSelectedItem(RoomsTablePanel.model_room.getValueAt(row, 3)+"");
+			
+		}
+		if(e.getSource().equals(SalesTablePanel.tblSales)) {
+			int row = SalesTablePanel.tblSales.getSelectedRow();
+			//SalesPanel.txtSalesID.setText(SalesTablePanel.model_Sales.getValueAt(row, 0)+"");
+			SalesPanel.txtSalesDate.setText(SalesTablePanel.model_Sales.getValueAt(row, 1)+"");
+			
+			
+		}
+		if(e.getSource().equals(SalesTablePanel.tblSales)) {
+			int row = SalesTablePanel.tblSales.getSelectedRow();
+			String search = SalesTablePanel.tblSales.getValueAt(row, 1).toString();
+			
+			SalesInfo.tbl_SalesInfoSort = new TableRowSorter(SalesInfo.model_SalesInfo);
+			SalesInfo.tblSalesInfo.setRowSorter(SalesInfo.tbl_SalesInfoSort);
+			SalesInfo.tbl_SalesInfoSort.setRowFilter(RowFilter.regexFilter(search));
+			
+		}
+		if(e.getSource().equals(TransactionPanel.cboTransRoomID)) {
+			for(int i = 0; i<TransactionTablePanel.model_trans.getRowCount();i++) {
+				for(int j = 0; j<RoomsTablePanel.model_room.getRowCount(); j++) {
+				if(TransactionPanel.cboTransRoomID.getSelectedItem().equals(TransactionTablePanel.model_trans.getValueAt(i, 2))&&TransactionTablePanel.model_trans.getValueAt(i, 6).equals("Checked In")||TransactionPanel.cboTransRoomID.getSelectedItem().equals(RoomsTablePanel.model_room.getValueAt(j, 0))&&RoomsTablePanel.model_room.getValueAt(j, 2).equals("Under maintenance")) {
+					TransactionButtonsPanel.btnAddTrans.setEnabled(false);
+				}else {
+					TransactionButtonsPanel.btnAddTrans.setEnabled(true);
+				}
+				
+				if(TransactionPanel.cboTransRoomID.getSelectedItem().equals(RoomsTablePanel.model_room.getValueAt(j, 0))&&RoomsTablePanel.model_room.getValueAt(j, 2).equals("Under maintenance")) {
+					TransactionButtonsPanel.btnAddTrans.setEnabled(false);
+				
+				}
+				}
+			}
+			//for(int i = 0; i<TransactionTablePanel.model_trans.getRowCount();i++) {
+				//if(TransactionPanel.cboTransCustID.getSelectedItem().equals(TransactionTablePanel.model_trans.getValueAt(i, 3))) {
+					//TransactionButtonsPanel.btnAddTrans.setEnabled(false);
+				
+			//}
+			
+			//}
+		}
+	}
+	public void mousePressed(MouseEvent e) { }
+	public void mouseReleased(MouseEvent e) { }
+	public void mouseEntered(MouseEvent e) { }
+	public void mouseExited(MouseEvent e) { }
+	
+}

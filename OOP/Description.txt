@@ -1,0 +1,4 @@
+Standard#250#400#
+Deluxe#300#500#
+Aircon#650#1200#
+Family#900#2000

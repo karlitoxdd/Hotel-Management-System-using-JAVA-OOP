@@ -1,0 +1,12 @@
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class TransactionButtonsPanel extends JPanel{
+	static JButton btnAdd, btnEdit, btnExit;
+	
+	public TransactionButtonsPanel() {
+		btnAdd  = new JButton("Add Record");
+		btnEdit  = new JButton("Edit Record");
+		btnExit  = new JButton("Exit");
+	}
+}
